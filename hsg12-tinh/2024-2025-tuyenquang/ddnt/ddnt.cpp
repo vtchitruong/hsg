@@ -66,6 +66,7 @@ void sieve()
 }
 
 
+// Hàm dùng để tìm số nguyên tố tiếp theo lớn hơn w
 int increase_to_next_prime(int w)
 {
     // Nếu w là số nguyên tố thì trả về 0
