@@ -51,7 +51,7 @@ void sieve()
     prime[0] = false;
     prime[1] = false;
 
-    // Đánh dấu false cho các bội của số nguyên tố p
+    // Duyệt từ 2 đến căn bậc 2 của number
     for (int p = 2; p * p < number + 1; ++p)
     {
         // Nếu p là nguyên tố thì đánh dấu false cho bội của p
@@ -66,7 +66,7 @@ void sieve()
 }
 
 
-// Hàm dùng để tìm số nguyên tố tiếp theo lớn hơn w
+// Hàm dùng để tính giá trị tăng thêm để đạt được số nguyên tố tiếp theo lớn hơn w
 int increase_to_next_prime(int w)
 {
     // Nếu w là số nguyên tố thì trả về 0
@@ -88,6 +88,7 @@ void dijkstra()
     D.resize(n + 1, INT_MAX);
     D[start] = 0;
 
+    // Mỗi phần tử trong set là {d, u}, trong đó d là khoảng cách ngắn nhất từ start đến u
     set<pair<int, int>> q;
     q.insert({0, start});
 
@@ -101,7 +102,7 @@ void dijkstra()
         int d = q.begin()->first;
         q.erase(q.begin());
 
-        // Dừng thuật toán khi đã đến đích
+        // Dừng khi đã đến đích
         if (u == finish)
             break;
 
@@ -130,7 +131,7 @@ void dijkstra()
                 // Cập nhật lại khoảng cách ngắn nhất từ đỉnh start đến đỉnh v
                 D[v] = D[u] + increase;
 
-                // Thêm v vào q với khoảng cách ngắn nhất từ start đến v là d[v]
+                // Thêm v vào q với khoảng cách ngắn nhất từ start đến v là D[v]
                 q.insert({D[v], v});
             }
         }

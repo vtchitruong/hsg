@@ -54,17 +54,19 @@ void input()
 void process()
 {
     // Khởi tạo giá trị cộng dồn hiện tại
-    int current_count = 0;
+    int current = 0;
 
-    // Cập nhật giá trị cộng dồn
+    // Duyệt từng phần tử của mảng chênh lệch
     int student_id, difference;   
     for (auto &d : diff)
     {
+        // Gán biến nhằm làm rõ nghĩa hơn
         student_id = d.first;
         difference = d.second;
 
-        current_count += difference;
-        join[student_id] = current_count;
+        // Thực hiện cộng dồn
+        current += difference;
+        join[student_id] = current;
     }
 }
 
