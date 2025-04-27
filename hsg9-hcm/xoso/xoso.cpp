@@ -12,7 +12,27 @@ vector<int> A;
 typedef long long int lli;
 vector<lli> F; // giai thừa (factorial)
 vector<lli> invF; // nghịch đảo giai thừa (inverse factorial)
-const int MOD = 1e9 + 7; 
+const lli M = 1e9 + 7; 
+
+
+// Hàm tính luỹ thừa modular(a^b mod m) bằng phương pháp bình phương và nhân
+lli power(lli base, lli exp)
+{
+    lli result = 1;
+    
+    base %= M;
+
+    while (exp > 0)
+    {
+        if (exp % 2 == 1)
+            result = (result * base) % M;
+        
+        base = (base * base) % M;
+        exp /= 2;
+    }
+
+    return result;
+}
 
 void input()
 {
