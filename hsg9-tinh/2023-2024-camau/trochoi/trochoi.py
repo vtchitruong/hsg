@@ -45,10 +45,10 @@ def process():
     global number_of_teams, total, max_score, max_team
 
     # Duyệt từng điểm tổng trong mảng total
-    for i in range(number_of_teams):   
-        if total[i] > max_score:        
+    for i, score in enumerate(total):   
+        if score > max_score:        
             # Cập nhật tổng điểm cao nhất
-            max_score = total[i]
+            max_score = score
 
             # Ghi nhận mã số của đội có điểm cao nhất
             max_team = i + 1

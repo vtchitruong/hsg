@@ -10,7 +10,7 @@ MAX = 10000000
 n = l = r = 0
 
 # Khởi tạo sàng với toàn bộ phần tử đều là 1 (true)
-prime = [1] * (MAX + 1)
+E = [1] * (MAX + 1)
 
 # prime_count[i] lưu số lượng số nguyên tố từ 1 đến i
 prime_count = [0] * (MAX + 1)
@@ -18,30 +18,37 @@ prime_count = [0] * (MAX + 1)
 
 # Hàm thực hiện sàng nguyên tố Eratosthenes
 def sieve():
-    global MAX, prime
+    global MAX, E
 
     # 0 và 1 không phải số nguyên tố
-    prime[0] = 0
-    prime[1] = 0
+    E[0] = 0
+    E[1] = 0
 
     # Duyệt từng số p trong phạm vi [2..sqrt(MAX)]
     for p in range(2, int(math.sqrt(MAX)) + 1):
         # Nếu p là số nguyên tố:
-        if prime[p] == 1:
+        if E[p] == 1:
             # thì đánh dấu 0 cho các bội của p, bắt đầu từ p * p
             for i in range(p * p, MAX + 1, p):
-                prime[i] = 0
+                E[i] = 0
+
+
+# Hàm tính mảng cộng dồn (prefix sum)
+def prefix_sum():
+    global E, prime_count
+
+    for i in range(1, MAX + 1):
+        prime_count[i] = prime_count[i - 1] + E[i]
 
 
 def process():
-    global MAX, n, l, r, prime, prime_count
+    global MAX, n, l, r, E, prime_count
 
-    # Thực hiện sàng nguyên tố
+    # Khởi tạo sàng nguyên tố E
     sieve()
 
-    # Thực hiện tính prefix sum (tổng cộng dồn)
-    for i in range(1, MAX + 1):
-        prime_count[i] = prime_count[i - 1] + prime[i]
+    # Khởi tạo mảng cộng dồn prime_count
+    prefix_sum()
 
     with open(input_file, 'r') as fi, open(output_file, 'w') as fo:
         n = int(fi.readline())

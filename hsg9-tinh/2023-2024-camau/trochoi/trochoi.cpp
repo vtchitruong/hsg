@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #define input_file "trochoi.inp"
 #define output_file "trochoi.out"
@@ -55,18 +56,14 @@ void input()
 
 void process()
 {
-    // Duyệt từng điểm tổng trong mảng total 
-    for (int i = 0; i < number_of_teams; ++i)
-    {
-        if (total[i] > max_score)
-        {
-            // Cập nhật tổng điểm cao nhất
-            max_score = total[i];
+    // biến it trỏ vào phần tử lớn nhất trong vector total
+    vector<lli>::iterator it = max_element(total.begin(), total.end());
 
-            // Ghi nhận mã số của đội có điểm cao nhất
-            max_team = i + 1;
-        }
-    }
+    // Lấy giá trị của phần tử lớn nhất đó
+    max_score = *it;
+
+    // Lấy chỉ số (vị trí) của phần tử lớn nhất đó
+    max_team = distance(total.begin(), it) + 1;
 }
 
 
