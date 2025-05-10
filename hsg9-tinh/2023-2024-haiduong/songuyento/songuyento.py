@@ -16,7 +16,7 @@ def input():
 
 
 def is_prime(x):
-    if x < 1:
+    if x < 2:
         return False
     
     if x < 4:

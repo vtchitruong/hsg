@@ -22,7 +22,7 @@ void input()
 
 bool is_prime(int x)
 {
-    if (x < 1) return false;
+    if (x < 2) return false;
 
     if (x < 4) return true;
 
