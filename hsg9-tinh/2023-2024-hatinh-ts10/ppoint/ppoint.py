@@ -6,10 +6,14 @@ output_file = os.path.join(sys.path[0], 'ppoint.out')
 
 n = 0
 P = []
-min_len = sys.maxsize # độ dài nhỏ nhất cần tìm
 
-def input_data():
+# độ dài nhỏ nhất cần tìm
+min_len = sys.maxsize
+
+
+def input():
     global n, P
+
     with open(input_file, 'r') as f:
         n = int(f.readline().strip())
         P = []
@@ -19,6 +23,8 @@ def input_data():
 
 
 def process():
+    global P, min_len
+
     # Sắp xếp mảng P theo thứ tự toạ độ tăng dần
     P.sort(key=lambda point: point[0])
 
@@ -26,8 +32,6 @@ def process():
     last_green = -1
     last_red = -1
     last_yellow = -1
-
-    global min_len
 
     # Duyệt mảng P
     for p in P:
@@ -42,18 +46,25 @@ def process():
         # Nếu đã tìm thấy đủ ba toạ độ
         # thì tính độ dài đoạn thẳng
         if last_green != -1 and last_red != -1 and last_yellow != -1:
+            # thì lấy toạ độ đầu và cuối
             min_pos = min(last_green, last_red, last_yellow)
             max_pos = max(last_green, last_red, last_yellow)
+
+            # cập nhật độ dài nhỏ nhất
             min_len = min(min_len, max_pos - min_pos)
 
 
 def output():
-    result = -1 if min_len == sys.maxsize else min_len
+    global min_len
+
     with open(output_file, 'w') as f:
-        f.write(str(result))
+        if min_len == sys.maxsize:
+            f.write(-1)
+        else:
+            f.write(str(min_len))
 
 
 if __name__ == '__main__':
-    input_data()
+    input()
     process()
     output()

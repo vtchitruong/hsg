@@ -1,13 +1,16 @@
 #include <iostream>
 
-#define inputFile "bnum4.inp"
-#define outputFile "bnum4.out"
+#define inputFile "bnum.inp"
+#define outputFile "bnum.out"
 
 using namespace std;
 
 string n;
+
+// các biến lưu kết quả để output
 int prime;
-int sum_digit; // tổng các chữ số
+int sum_digit;
+
 
 void input()
 {
@@ -20,14 +23,13 @@ void input()
 
 
 // Hàm kiểm tra số nguyên tố
-bool isPrime(int n)
+bool is_prime(int n)
 {
     if (n < 2) return false;
     if (n < 4) return true;
     if (n % 2 == 0) return false;
     if (n % 3 == 0) return false;
 
-    // Kiểm tra n có chia hết cho 5, 7, 11, 13, 17, 19, v.v...
     for (int i = 5; i * i <= n; i += 6)
     {
         if (n % i == 0) return false;
@@ -53,14 +55,10 @@ void process()
         sum_digit += digit * digit;
     }
 
-    if (isPrime(sum_digit))
-    {
+    if (is_prime(sum_digit))
         prime = 1;
-    }
     else
-    {
         prime = -1;
-    }
 }
 
 

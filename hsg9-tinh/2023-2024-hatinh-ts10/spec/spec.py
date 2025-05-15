@@ -7,6 +7,7 @@ output_file = os.path.join(sys.path[0], 'spec2.out')
 n = 0
 A = []
 
+
 def input_data():
     global n, A
 
@@ -26,7 +27,7 @@ def process():
     max_positive = 0
     max_negative = 0
 
-    # Duyệt mảng A
+    # Duyệt từng phần tử của mảng A
     for a in A:
         # Tăng 1 cho bộ đếm tương ứng với âm hoặc dương
         # và gán 0 cho bộ đếm còn lại

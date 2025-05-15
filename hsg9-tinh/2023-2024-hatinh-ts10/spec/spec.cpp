@@ -10,6 +10,7 @@ int n;
 vector<char> A;
 int max_consecutive = 0;
 
+
 void input()
 {
     ios_base::sync_with_stdio(false);
@@ -42,7 +43,7 @@ int process()
     int max_positive = 0;
     int max_negative = 0;
 
-    // Duyệt mảng A
+    // Duyệt từng phần tử của mảng A
     for (char a : A)
     {
         // Tăng 1 cho bộ đếm tương ứng với âm hoặc dương

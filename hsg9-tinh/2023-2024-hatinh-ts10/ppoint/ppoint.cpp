@@ -15,7 +15,10 @@ struct point
 
 int n;
 vector<point> P;
-int min_len = INT_MAX; // độ dài nhỏ nhất cần tìm
+
+// độ dài nhỏ nhất cần tìm
+int min_len = INT_MAX;
+
 
 void input()
 {
@@ -54,7 +57,7 @@ void process()
     int min_pos;
     int max_pos;
 
-    // Duyệt mảng P
+    // Duyệt từng toạ độ trong mảng P
     for (int i = 0; i < n; ++i)
     {
         // Ghi nhận toạ độ mới khi tìm thấy màu
@@ -66,17 +69,19 @@ void process()
             last_yellow = P[i].x;
 
         // Nếu đã tìm thấy đủ ba toạ độ
-        // thì tính độ dài đoạn thẳng
         if (last_green != -1)
             if (last_red != -1)
                 if (last_yellow != -1)
                 {
+                    // thì lấy toạ độ đầu và cuối
                     min_pos = min({last_green, last_red, last_yellow});
                     max_pos = max({last_green, last_red, last_yellow});
+
+                    // 
                     min_len = min(min_len, max_pos - min_pos);
                 }
     }
-} 
+}
 
 
 void output()

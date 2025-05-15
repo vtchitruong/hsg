@@ -1,15 +1,17 @@
 import os
 import sys
 
-input_file = os.path.join(sys.path[0], 'bnum4.inp')
-output_file = os.path.join(sys.path[0], 'bnum4.out')
+input_file = os.path.join(sys.path[0], 'bnum.inp')
+output_file = os.path.join(sys.path[0], 'bnum.out')
 
 n = ''
+
+# các biến lưu kết quả để output
 prime = False
 sum_digit = 0
 
 
-def input_data():
+def input():
     global n
     
     with open(input_file, 'r') as f:
@@ -51,6 +53,6 @@ def output(prime: int, sum_digit: int):
 
 
 if __name__ == '__main__':
-    input_data()
+    input()
     process()
     output(prime, sum_digit)
