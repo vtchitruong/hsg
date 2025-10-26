@@ -1,83 +1,89 @@
 import os
 import sys
 
-input_file = os.path.join(sys.path[0], 'choncam1.inp')
-output_file = os.path.join(sys.path[0], 'choncam1.out')
+input_file = os.path.join(sys.path[0], 'choncam3.inp')
+output_file = os.path.join(sys.path[0], 'choncam3.out')
 
 n = 0
-trays = []
 
-# Mảng tần số f
+# mảng tần số f lưu số lượng đang xét của các loại cam
 f = [0] * 6
 
-# Mảng continuous dùng để đánh dấu tính liên tiếp của loại cam
+# mảng continuous dùng để đánh dấu tính liên tiếp của loại cam
 continuous = [False] * 6
 
-
-def input_data():
-    global n, trays
-
-    with open(input_file, 'r') as f:
-        n = int(f.readline())
-
-        trays = [[0, 0] for _ in range(n)]
-
-        for i in range(n):
-            trays[i] = list(map(int, f.readline().split()))
+# output
+max_oranges = 0
+best_type = 1
 
 
 # Hàm dùng để đánh dấu tính liên tiếp của loại cam
 def mark(first, second):
     global continuous
 
-    # Đặt tất cả phần tử trong mảng continuous đều là False
+    # Đặt lại cho tất cả đều là không liên tiếp
     continuous = [False] * 6
 
-    # Đánh dấu liên tiếp
+    # Đánh dấu liên tiếp cho hai loại đang xét
     continuous[first] = continuous[second] = True
 
 
-def process():
-    global n, trays, f, continuous
+# Hàm dùng để xét nhiều nhất
+def consider(current_oranges, current_type):
+    global max_oranges, best_type
 
-    # Duyệt từng khay
-    for i in range(n):
-        # Đọc hai loại cam trong khay i
-        first = trays[i][0];
-        second = trays[i][1];
+    if current_oranges == max_oranges:
+        # Nếu loại đang xét bằng với giá trị lớn nhất
+        # thì lấy loại có nhãn nhỏ nhất
+        best_type = min(current_type, best_type)
+    elif current_oranges > max_oranges:
+        # Nếu loại đang xét lớn hơn giá trị lớn nhất
+        # thì cập nhật giá trị lớn nhất mới và loại mới
+        max_oranges = current_oranges
+        best_type = current_type
 
-        # Nếu là loại cam thứ nhất đang liên tục thì tăng tần số lên 1
-        # Ngược lại, không liên tục, thì đếm lại từ đầu
-        if continuous[first]:
-            f[first] += 1;
-        else:
-            f[first] = 1;
 
-        # Nếu là loại cam thứ hai đang liên tục thì tăng tần số lên 1
-        # Ngược lại, không liên tục, thì đếm lại từ đầu
-        if continuous[second]:
-            f[second] += 1;
-        else:
-            f[second] = 1;
-        
-        # Đánh dấu lại tính liên tục cho từng loại cam
-        mark(first, second)
+def input_process():
+    global n, f, continuous, max_oranges, best_type
+
+    with open(input_file, 'r') as fi:
+        n = int(fi.readline())
+
+        # Duyệt từng khay
+        for i in range(n):
+            first, second = map(int, fi.readline().split())
+
+            # Nếu là loại cam thứ nhất đang liên tục thì tăng tần số lên 1
+            # Ngược lại, không liên tục, thì đếm lại từ đầu
+            if continuous[first]:
+                f[first] += 1
+            else:
+                f[first] = 1
+
+            # Xét xem đã đạt được nhiều nhất hay chưa
+            consider(f[first], first)
+
+            # Nếu là loại cam thứ hai đang liên tục thì tăng tần số lên 1
+            # Ngược lại, không liên tục, thì đếm lại từ đầu
+            if continuous[second]:
+                f[second] += 1
+            else:
+                f[second] = 1
+
+            # Xét xem đã đạt được nhiều nhất hay chưa
+            consider(f[second], second)
+            
+            # Đánh dấu lại tính liên tục cho từng loại cam
+            mark(first, second)
 
 
 def output():
-    global f
+    global max_oranges, best_type
 
-    # Tìm số lượng của loại cam có tần số lớn nhất
-    orange_count = max(f)
-
-    # Tìm loại cam có tần số lớn nhất
-    orange_type = f.index(orange_count)
-
-    with open(output_file, 'w') as f_out:
-        f_out.write(f'{orange_count} {orange_type}')
+    with open(output_file, 'w') as fo:
+        fo.write(f'{max_oranges} {best_type}')
 
 
 if __name__ == '__main__':
-    input_data()
-    process()
+    input_process()
     output()
