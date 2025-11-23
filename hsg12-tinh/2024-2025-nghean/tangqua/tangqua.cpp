@@ -31,7 +31,7 @@ void input()
 
 void process()
 {
-    // Khởi tạo mảng tần số granted, dùng để đánh dấu những món quà đã phát
+    // Khởi tạo mảng đánh dấu granted, dùng để đánh dấu những món quà đã phát
     vector<char> granted(1000001, 0);
     
     B.resize(n);

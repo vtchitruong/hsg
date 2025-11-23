@@ -18,7 +18,7 @@ def input_data():
 def process():
     global n, A, B
 
-    # Khởi tạo mảng tần số granted, dùng để đánh dấu những món quà đã phát
+    # Khởi tạo mảng đánh dấu granted, dùng để đánh dấu những món quà đã phát
     granted = [0] * 1000001
 
     # Khởi tạo món quá có giá trị nhỏ nhất là 1

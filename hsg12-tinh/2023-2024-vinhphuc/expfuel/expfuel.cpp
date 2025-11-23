@@ -7,10 +7,28 @@
 
 using namespace std;
 
-int n, m, c;
-vector<pair<int, int>> A;
-vector<int> D;
-vector<int> result;
+typedef long long int lli;
+
+const lli INF = 4e18;
+
+int n, m;
+
+// nhiên liệu cho mỗi đơn vị khoảng cách
+lli c;
+
+// Mảng điểm tập kết: first là toạ độ, second là chi phí bay
+vector<pair<lli, lli>> A;
+
+// Mảng điểm thám hiểm (điểm đích)
+vector<lli> D;
+
+// Mảng dùng để tính prefix min, dành cho các điểm nằm bên trái điểm đích
+// Lưu min(b - c * a) từ trái sang
+vector<lli> min_left;
+
+// Mảng dùng để tính suffix min, dành cho các điểm nằm bên phải điểm đích
+// Lưu min(b + c * a) từ phải sang
+vector<lli> min_right;
 
 
 void input()
@@ -38,40 +56,72 @@ void input()
 }
 
 
-// Hàm tính tổng nhiên liệu bao gồm đường bay và đường bộ
-int fuel(int flying_fuel, int ai, int dj)
+// Hàm tiền xử lý
+void precompute()
 {
-    return flying_fuel + c * abs(ai - dj);
-}
+    // Sắp xếp điểm tập kết theo toạ độ tăng dần
+    sort(A.begin(), A.end());
 
+    // Tính prefix min, càng tiến sang phải càng nhỏ dần
+    min_left.resize(n);
+    lli current_min = INF;
 
-void process()
-{
-    int min_fuel;
-
-    // Duyệt điểm thám hiểm dj của các đội
-    for (int j = 0; j < m; ++j)
+    for (int i = 0; i < n; ++i)
     {
-        min_fuel = INT_MAX; 
+        lli value = A[i].second  - c * A[i].first;
+        current_min = min(current_min, value);
+        min_left[i] = current_min;
+    }
 
-        // Duyệt các điểm tập kết a_i của đội dj đang xét
-        for (const pair<int, int>& a : A)
-        {
-            min_fuel = min(min_fuel, fuel(a.second, a.first, D[j]));
-        }
+    // Tính suffix min, càng tiến sang trái càng nhỏ dần
+    min_right.resize(n);
+    current_min = INF;
 
-        result.push_back(min_fuel);    
+    for (int i = n - 1; i > -1; --i)
+    {
+        lli value = A[i].second + c * A[i].first;
+        current_min = min(current_min, value);
+        min_right[i] = current_min;
     }
 }
 
 
-void output()
+// Hàm vừa xử lý vừa in kết quả ra tập tin
+void process_output()
 {
     freopen(output_file, "w", stdout);
 
+    // Duyệt điểm thám hiểm D[j] của từng đội
     for (int j = 0; j < m; ++j)
     {
-        cout << result[j] << '\n';
+        // Khởi tạo output của một đội
+        lli answer = INF;
+
+        // Tìm vị trí điểm tập kết đầu tiên nằm bên phải điểm đích D[j]
+        auto it = upper_bound(A.begin(), A.end(), D[j],
+                [](lli dj, const pair<lli, lli>& a) {
+                    return dj < a.first;
+                });
+        
+        // Chuyển đổi iterator sang chỉ số của mảng
+        // Chỉ số k là ranh giới
+        // - Các điểm từ 0 đến k-1: nằm bên trái hoặc trùng điểm đích (A[i] <= D[j])
+        // - Các điểm từ k đến n-1: nằm bên phải đích (A[i] > D[j])
+        int k = distance(A.begin(), it);
+
+        // Trường hợp 1: chọn điểm tập kết ở bên trái
+        if (k > 0)
+        {
+            answer = min(answer, min_left[k - 1] + c * D[j]);
+        }
+
+        // Trường hợp 2: chọn điểm tập kết ở bên phải
+        if (k < n)
+        {
+            answer = min(answer, min_right[k] - c * D[j]);
+        }
+
+        cout << answer << '\n';
     }
 }
 
@@ -79,8 +129,8 @@ void output()
 int main()
 {
     input();
-    process();
-    output();
+    precompute();
+    process_output();
 
     return 0;
 }
