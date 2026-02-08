@@ -9,30 +9,30 @@ using namespace std;
 string s;
 
 // mảng tần số f (frequency) lưu số lần xuất hiện của các ký tự
-int f[26] = {};
-
+int f[26] = {0};
 
 void input()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    
+
     freopen(input_file, "r", stdin);
 
     getline(cin, s);
 }
 
-
 void process()
 {
-    // Duyệt từng ký tự của chuỗi s
-    for (int i = 0; i < s.length(); i++)
+    // Duyệt từng ký tự c của chuỗi s
+    for (char c : s)
     {
-        // Ứng với ký tự s[i], cập nhật số lần xuất hiện của nó
-        f[s[i] - 'a']++;
+        if (c >= 'a' && c <= 'z')
+        {
+            // Nếu c là ký tự a..z thì cập nhật số lần xuất hiện của nó
+            f[c - 'a']++;
+        }
     }
 }
-
 
 void output()
 {
@@ -40,11 +40,10 @@ void output()
 
     for (int i = 0; i < 26; i++)
     {
-        if (f[i] != 0)
+        if (f[i] > 0)
             cout << (char)(i + 'a') << " " << f[i] << '\n';
     }
 }
-
 
 int main()
 {

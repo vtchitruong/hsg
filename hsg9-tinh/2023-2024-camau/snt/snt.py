@@ -9,57 +9,64 @@ MAX = 10000000
 
 n = l = r = 0
 
-# Khởi tạo sàng với toàn bộ phần tử đều là 1 (true)
-E = [1] * (MAX + 1)
+# Khởi tạo sàng eratosthenes với toàn bộ phần tử đều là 1 (true)
+e = [1] * (MAX + 1)
 
 # prime_count[i] lưu số lượng số nguyên tố từ 1 đến i
 prime_count = [0] * (MAX + 1)
 
 
-# Hàm thực hiện sàng nguyên tố Eratosthenes
+# Hàm khởi tạo sàng nguyên tố eratosthenes
 def sieve():
-    global MAX, E
+    global MAX, e
 
     # 0 và 1 không phải số nguyên tố
-    E[0] = 0
-    E[1] = 0
+    e[0] = 0
+    e[1] = 0
 
     # Duyệt từng số p trong phạm vi [2..sqrt(MAX)]
     for p in range(2, int(math.sqrt(MAX)) + 1):
-        # Nếu p là số nguyên tố:
-        if E[p] == 1:
-            # thì đánh dấu 0 cho các bội của p, bắt đầu từ p * p
+        if e[p] == 1:
+            # Nếu p là số nguyên tố thì đánh dấu 0 cho các bội của p, bắt đầu từ p * p
             for i in range(p * p, MAX + 1, p):
-                E[i] = 0
+                e[i] = 0
 
 
 # Hàm tính mảng cộng dồn (prefix sum)
 def prefix_sum():
-    global E, prime_count
+    global e, prime_count
 
     for i in range(1, MAX + 1):
-        prime_count[i] = prime_count[i - 1] + E[i]
+        prime_count[i] = prime_count[i - 1] + e[i]
 
 
+# Hàm vừa đọc input vừa xuất kết quả
 def process():
-    global MAX, n, l, r, E, prime_count
+    global MAX, n, l, r, e, prime_count
 
-    # Khởi tạo sàng nguyên tố E
+    # Khởi tạo sàng nguyên tố e
     sieve()
 
-    # Khởi tạo mảng cộng dồn prime_count
+    # Tính mảng cộng dồn prime_count
     prefix_sum()
 
-    with open(input_file, 'r') as fi, open(output_file, 'w') as fo:
-        n = int(fi.readline())
+    sys.stdin = open(input_file, 'r')
+    sys.stdout = open(output_file, 'w')
 
-        # Vừa đọc input vừa xuất kết quả
-        for q in range(n):
-            l, r = map(int, fi.readline().split())
+    # Đọc toàn bộ dữ liệu vào bộ nhớ đệm và tách thành các token
+    data = sys.stdin.read().split()
 
-            # Dựa vào prefix sum, in ra số lượng số nguyên tố trong phạm vi [l, r]
-            result = prime_count[r] - prime_count[l - 1]
-            fo.write(str(result) + '\n')
+    iterator = iter(data)
+
+    n = int(next(iterator))
+
+    for _ in range(n):
+        l = int(next(iterator))
+        r = int(next(iterator))
+
+        # Dựa vào prefix sum, in ra số lượng số nguyên tố trong phạm vi [l, r]
+        result = prime_count[r] - prime_count[l - 1]
+        print(result)
 
 
 if __name__ == '__main__':

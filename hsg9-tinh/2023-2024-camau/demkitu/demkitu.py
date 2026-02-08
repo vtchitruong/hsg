@@ -13,26 +13,28 @@ f = [0] * 26
 def input():
     global s
 
-    with open(input_file, 'r') as f:
-        s = f.readline()
+    sys.stdin = open(input_file, 'r')
+
+    s = sys.stdin.read()
 
 
 def process():
     global s, f
 
-    # Duyệt từng ký tự của chuỗi s
-    for i in range(len(s)):
-        # vỨng với ký tự s[i], cập nhật số lần xuất hiện của nó
-        f[ord(s[i]) - ord('a')] += 1
+    # Duyệt từng ký tự c của chuỗi s
+    for c in s:
+        # Nếu c là ký tự a..z thì cập nhật số lần xuất hiện của nó
+        f[ord(c) - ord('a')] += 1
 
 
 def output():
     global f
 
-    with open(output_file, 'w') as fo:
-        for i in range(26):
-            if f[i] != 0:
-                fo.write(f'{chr(i + ord("a"))} {f[i]}\n')
+    sys.stdout = open(output_file, 'w')
+
+    for i in range(26):
+        if f[i] > 0:
+            print(f'{chr(i + ord('a'))} {f[i]}')
 
 
 if __name__ == '__main__':
