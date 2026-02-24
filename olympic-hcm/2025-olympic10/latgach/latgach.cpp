@@ -12,7 +12,6 @@ ull m, n, t;
 // độ rộng tối đa cần tìm
 ull result;
 
-
 void input()
 {
     ios_base::sync_with_stdio(false);
@@ -23,20 +22,20 @@ void input()
     cin >> m >> n >> t;
 }
 
-
 bool check(ull weight)
 {
-    if (weight == 0) return true;
+    if (weight == 0)
+        return true;
 
     // Trường hợp phần không lát gạch không tồn tại
-    if (2ULL * weight >= m || 2ULL * weight >= n) return false;
+    if (2ULL * weight >= m || 2ULL * weight >= n)
+        return false;
 
     // Tính số gạch cần lát
     ull tiles = (2ULL * weight) * (m + n - 2ULL * weight);
 
     return tiles <= t;
 }
-
 
 void process()
 {
@@ -62,14 +61,12 @@ void process()
     }
 }
 
-
 void output()
 {
     freopen(output_file, "w", stdout);
 
     cout << result;
 }
-
 
 int main()
 {

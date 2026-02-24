@@ -1,2 +1,6 @@
 **/*.exe
 .gitignore
+.vscode/launch.json
+.vscode/tasks.json
+test.cpp
+.gitignore

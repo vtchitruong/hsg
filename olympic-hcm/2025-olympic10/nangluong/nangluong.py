@@ -8,13 +8,19 @@ n = a = b = 0
 p = 0 # số ngày luyện tập cần tìm
 
 
-def input_data():
+def input():
     global n, a, b
 
-    with open(input_file, 'r') as f:
-        n = int(f.readline())
-        a = int(f.readline())
-        b = int(f.readline())
+    sys.stdin = open(input_file, 'r')
+
+    # Đọc toàn bộ dữ liệu vào bộ nhớ đệm và tách thành các token
+    data = sys.stdin.read().split()
+
+    iterator = iter(data)
+
+    n = int(next(iterator))
+    a = int(next(iterator))
+    b = int(next(iterator))
 
 
 def process():
@@ -32,13 +38,12 @@ def process():
 def output():
     global p
 
-    with open(output_file, 'w') as f:
-        f.write(str(p))
+    sys.stdout = open(output_file, 'w')
+
+    print(p)
 
 
 if __name__ == '__main__':
-    input_data()
+    input()
     process()
     output()
-
-

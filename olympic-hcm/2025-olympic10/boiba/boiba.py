@@ -11,12 +11,22 @@ A = []
 result = 0
 
 
-def input_data():
+def input():
     global n, A
 
-    with open(input_file, 'r') as f:
-        n = int(f.readline())
-        A = list(map(int, f.readline().split()))
+    sys.stdin = open(input_file, 'r')
+
+    # Đọc toàn bộ dữ liệu vào bộ nhớ đệm và tách thành các token
+    data = sys.stdin.read().split()
+
+    iterator = iter(data)
+
+    n = int(next(iterator))
+
+    A = [0] * n
+
+    for i in range(n):
+        A[i] = int(next(iterator))
 
 
 def process():
@@ -53,11 +63,12 @@ def process():
 def output():
     global result
 
-    with open(output_file, 'w') as f:
-        f.write(str(result))
+    sys.stdout = open(output_file, 'w')
+    
+    print(result)
 
 
 if __name__ == '__main__':
-    input_data()
+    input()
     process()
     output()

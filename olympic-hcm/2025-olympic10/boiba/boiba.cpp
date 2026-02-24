@@ -12,8 +12,7 @@ int n;
 // tổng giá trị cần cộng cho các phần tử
 lli result;
 
-
-void input()
+void input_process()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -28,7 +27,7 @@ void input()
     // phần tử a[i] sau khi cộng thêm để chia hết cho 3
     lli new_ai;
 
-    // Giá trị tích luỹ từ các phần tử trước đó dùng để cộng thêm cho phần tử tiếp theo
+    // giá trị tích lũy từ các phần tử trước đó dùng để cộng thêm cho phần tử tiếp theo
     lli cumulative = 0;
 
     // Duyệt các phần tử từ đầu đến cuối
@@ -37,7 +36,7 @@ void input()
         // Đọc từng phần tử từ tập tin input
         cin >> ai;
 
-        // Tính a[i] sau khi cộng thêm giá trị tích luỹ để chia hết cho 3 
+        // Tính a[i] sau khi cộng thêm giá trị tích lũy để chia hết cho 3
         new_ai = ai + cumulative;
 
         // Tính số dư khi chia cho 3
@@ -45,7 +44,8 @@ void input()
 
         // Tính giá trị x cần cộng thêm để chia hết cho 3
         lli x = 0;
-        if (remain != 0) x = 3 - remain;
+        if (remain != 0)
+            x = 3 - remain;
 
         // x > 0 nghĩa là cần phải cộng thêm x cho phần tử tiếp theo
         if (x > 0)
@@ -53,12 +53,11 @@ void input()
             // Cập nhật tổng giá trị cần cộng cho phần tử, bao gồm a[i] và tất cả phần tử sau a[i]
             result += x * (n - i);
 
-            // Cập nhật giá trị tích luỹ nhằm cộng cho phần tử tiếp theo ở vòng lặp kế tiếp
+            // Cập nhật giá trị tích lũy nhằm cộng cho phần tử tiếp theo ở vòng lặp kế tiếp
             cumulative += x;
         }
-    }   
+    }
 }
-
 
 void output()
 {
@@ -66,10 +65,9 @@ void output()
     cout << result;
 }
 
-
 int main()
 {
-    input();
+    input_process();
     output();
 
     return 0;

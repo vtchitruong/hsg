@@ -1,8 +1,8 @@
 import os
 import sys
 
-input_file = os.path.join(sys.path[0], 'latgach.inp')
-output_file = os.path.join(sys.path[0], 'latgach.out')
+input_file = os.path.join(sys.path[0], 'latgach1.inp')
+output_file = os.path.join(sys.path[0], 'latgach1.out')
 
 m = n = t = 0
 
@@ -10,11 +10,19 @@ m = n = t = 0
 result = 0
 
 
-def input_data():
+def input():
     global m, n, t
 
-    with open(input_file, 'r') as f:
-        m, n, t = map(int, f.readline().split())
+    sys.stdin = open(input_file, 'r')
+
+    # Đọc toàn bộ dữ liệu vào bộ nhớ đệm và tách thành các token
+    data = sys.stdin.read().split()
+
+    iterator = iter(data)
+
+    m = int(next(iterator))
+    n = int(next(iterator))
+    t = int(next(iterator))
 
 
 def check(weight):
@@ -54,11 +62,12 @@ def process():
 def output():
     global result
 
-    with open(output_file, 'w') as f:
-        f.write(str(result))
+    sys.stdout = open(output_file, 'w')
+    
+    print(result)
 
 
 if __name__ == '__main__':
-    input_data()
+    input()
     process()
     output()
