@@ -36,8 +36,6 @@ def process():
 
 
 def output():
-    global p
-
     sys.stdout = open(output_file, 'w')
 
     print(p)

@@ -61,8 +61,6 @@ def process():
 
 
 def output():
-    global schedule
-
     sys.stdout = open(output_file, 'w')
 
     print(len(schedule))
