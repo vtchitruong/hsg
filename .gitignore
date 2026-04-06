@@ -4,3 +4,5 @@
 .vscode/tasks.json
 test.cpp
 .gitignore
+.venv
+
