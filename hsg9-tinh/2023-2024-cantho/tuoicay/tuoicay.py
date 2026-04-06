@@ -12,14 +12,25 @@ max_count = 0
 def input():
     global n, k, A
 
-    with open(input_file, 'r') as f:
-        n, k = map(int, f.readline().split())
+    sys.stdin = open(input_file, 'r')
 
-        A = list(map(int, f.readline().split()))
+    # Đọc toàn bộ dữ liệu vào bộ nhớ đệm và tách thành các token
+    data = sys.stdin.read().split()
+
+    iterator = iter(data)
+
+    n = int(next(iterator))
+
+    k = int(next(iterator))
+
+    A = [0] * n
+
+    for i in range(n):
+        A[i] = int(next(iterator))
 
 
 def process():
-    global n, k, A, max_count
+    global max_count
 
     left = 0
 
@@ -42,10 +53,9 @@ def process():
 
 
 def output():
-    global max_count
+    sys.stdout = open(output_file, 'w')
 
-    with open(output_file, 'w') as f:
-        f.write(str(max_count))
+    print(max_count)
 
 
 if __name__ == '__main__':

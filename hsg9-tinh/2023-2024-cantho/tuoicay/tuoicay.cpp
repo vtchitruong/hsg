@@ -10,7 +10,6 @@ int n, k;
 vector<int> A;
 int max_count = 0;
 
-
 void input()
 {
     ios_base::sync_with_stdio(false);
@@ -27,7 +26,6 @@ void input()
         cin >> A[i];
     }
 }
-
 
 void process()
 {
@@ -57,14 +55,12 @@ void process()
     }
 }
 
-
 void output()
 {
     freopen(output_file, "w", stdout);
 
     cout << max_count;
 }
-
 
 int main()
 {
